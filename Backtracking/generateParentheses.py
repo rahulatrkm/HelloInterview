@@ -28,8 +28,24 @@ from typing import List
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         # Your code goes here
-        pass
-
+        ans = []
+        curr = []
+        def helper(n, oc):
+            if n == 0:
+                curr.append(')'*oc)
+                ans.append("".join(curr))
+                curr.pop()
+                return
+            
+            if oc:
+                curr.append(")")
+                helper(n, oc-1)
+                curr.pop()
+            curr.append('(')
+            helper(n-1, oc+1)
+            curr.pop()
+        helper(n, 0)
+        return ans
 
 def run_tests():
     solution = Solution()

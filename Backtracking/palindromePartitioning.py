@@ -34,11 +34,35 @@ Space Complexity: O(n) for recursion depth
 """
 
 from typing import List
+from functools import lru_cache
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         # Your code goes here
-        pass
+        @lru_cache
+        def ispalindrome(i, j):
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            return True
+        
+        n = len(s)
+        curr = []
+        ans = []
+        def helper(idx):
+            if idx == n:
+                ans.append(curr.copy())
+                return
+            for i in range(idx, n):
+                if ispalindrome(idx, i):
+                    curr.append(s[idx:(i+1)])
+                    helper(i+1)
+                    curr.pop()
+        helper(0)
+        return ans
+
 
 
 def run_tests():

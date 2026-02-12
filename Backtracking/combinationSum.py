@@ -34,7 +34,21 @@ from typing import List
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         # Your code goes here
-        pass
+        ans = []
+        curr = []
+        def helper(idx, target):
+            if target == 0:
+                ans.append(curr.copy())
+                return
+            if idx == len(candidates) or target < 0:
+                return
+            helper(idx+1, target)
+            curr.append(candidates[idx])
+            helper(idx, target-candidates[idx])
+            curr.pop()
+        
+        helper(0, target)
+        return ans
 
 
 def run_tests():

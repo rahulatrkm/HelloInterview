@@ -30,7 +30,18 @@ from typing import List
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         # Your code goes here
-        pass
+        ans = []
+        curr = []
+        def helper(idx):
+            if idx == len(nums):
+                ans.append(curr.copy())
+                return
+            helper(idx+1)
+            curr.append(nums[idx])
+            helper(idx+1)
+            curr.pop()
+        helper(0)
+        return ans
 
 
 def run_tests():
